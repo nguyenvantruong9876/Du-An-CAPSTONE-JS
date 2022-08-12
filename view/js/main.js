@@ -59,7 +59,7 @@ function DisplayProducts() {
 }
 const productDetails = [{
     name: "iphoneX",
-    price: "$1000",
+    price: "1000",
     screen: "screen 68",
     backCamera: "2 camera 12 MP",
     frontCamera: "7 MP",
@@ -68,7 +68,7 @@ const productDetails = [{
     type: "iphone"
 }, {
     name: "Samsung Galaxy M51 ",
-    price: "$35",
+    price: "35",
     screen: "screen 69",
     backCamera: " Chính 64 MP & Phụ 12 MP, 5 MP, 5 MP",
     frontCamera: " 32 MP",
@@ -77,7 +77,7 @@ const productDetails = [{
     type: "Samsung"
 }, {
     name: "Samsung Galaxy M22",
-    price: "$45000",
+    price: "45000",
     screen: "screen 70",
     backCamera: "Chính 12 MP & Phụ 64 MP, 12 MP",
     frontCamera: " 32 MP",
@@ -86,7 +86,7 @@ const productDetails = [{
     type: "Samsung"
 }, {
     name: "Iphone 11",
-    price: "$1000",
+    price: "1000",
     screen: "screen 54",
     backCamera: "Camera: Chính 12 MP & Phụ 64 MP, 12 MP",
     frontCamera: "32 MP",
