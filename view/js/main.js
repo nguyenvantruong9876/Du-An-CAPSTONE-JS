@@ -1,11 +1,12 @@
 function Carosel() {
     return `\n  <div class='banner'>\n  
-    \n  <div class='main-cart' >${DisplayProducts()}</div>\n 
+    \n  <div class='main-cart' >${DisplayProduct()}</div>\n 
     \n  <div class='nav'>\n   
-        <button onclick='sideNav(1)'><i class='fas fa-shopping-cart' style='font-size:2rem;'></i></button>\n    
+    
+        <button><i class='fas fa-shopping-cart' style='font-size:3rem;'></i></button>\n    
         <span class= 'total-qty'></span>
     \n  </div>
-    \n  <div onclick='sideNav(0)' class='cover'></div>
+    \n  <div  class='cover'></div>
     \n  <div class='cover purchase-cover'></div>
     \n  <div class='cart'></div>
     \n  <div class='stock-limit'>
@@ -54,7 +55,8 @@ function Product(sp = {}) {
                 </div>
             \n  </div>`
 }
-function DisplayProducts() {
+
+function DisplayProduct() {
     return productDetails.map(sp => Product(sp)).join("")
 }
 const productDetails = [{
@@ -94,6 +96,7 @@ const productDetails = [{
     desc: "Thiết kế đột phá, màn hình tuyệt đỉnh",
     type: "Iphone"
 },], cartDetails = [];
+
 
 
 function App() {
