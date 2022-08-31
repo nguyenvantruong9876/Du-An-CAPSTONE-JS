@@ -2,8 +2,8 @@
 var spService = new SanPhamService();
 var productlist = [];
 var typeSP = [];
-var cart = [];
-var clearcart =[];
+var cart = {quantity: 0, total: 0, data: []};
+
 let quantity = 0;
 function getProductList() {
     spService.getProductListIP()
@@ -24,7 +24,7 @@ function showTable(mangSP) {
         content += `
           <div class='card'> 
                 <div class='top-bar'>      
-                    <i class='fab fa-apple'></i>   
+                    <i class="fa-solid fa-cannabis"></i> 
                     <em class="type">${sp.type}</em>
                 </div>
                 <div class='img-container'>
@@ -48,7 +48,7 @@ function showTable(mangSP) {
                     <div class='purchase'>  
                         <p class='product-price'>$ ${sp.price}</p>  
                         <span class='btn-add'>
-                            <button onclick='addproducts("${sp.id}")' class='add-btn'>Add<i class='fas fa-chevron-right'></i></button> 
+                            <button  class='add-btn' onclick="addproducts('${sp.id}')">Add To Cart<i class='fas fa-chevron-right'></i></button> 
                         </span>
                     </div> 
                 </div>
@@ -71,30 +71,33 @@ function showCart() {
                 <div class='nav'> 
                     
                     <button onclick="showshopCart()"><i class='fas fa-shopping-cart' style='font-size:3rem;'></i></button>  
-                    <span class= 'total'>0</span>
+                    <span class= 'totalicon'id="quantity" ></span>
                 </div>
                 
-                <select name="" id="type" onchange="showtype()" class="form-control" style="width: 20%;">
+                <select name="" id="type" onchange="showtype()" class="form-control" style="width: 15%;">
                     <option value="all">Tất cả</option>
                     <option value="Iphone">Iphone</option>
                     <option value="Samsung">Samsung</option>
                 </select>
 
                 <div class='side-nav' id='side-nav' > 
-                    <button onclick="closeCart()" ><i class='fas fa-times'></i></button> 
+                    <button onclick="closeCart()"  ><i class='fas fa-times'></i></button> 
                      
                      <h2>Cart</h2>   
-                     <div id="spShop">
+                    <div id="spShop">
                        <span class="empty-cart">The Cart</span>
-                     </div>
-                     <div class='final'>   
-                        <strong>Total: $ <span class="total"></span></strong>
+                    </div>
+                    <div class='final'>  
+
+                        <strong>Total: $ <span class="total">0</span></strong>
+                       
                         <div class='action'>     
-                            <button onclick='' class='btn buy'>Purchase <i class='fas fa-credit-card' style='color:#6665dd;'></i></button>
-                            <button onclick='' class='btn clear'>Clear Cart <i class='fas fa-trash' style='color:#bb342f;'></i></button>
+                            <button onclick='' class='btn buy'>Thanh Toán <i class='fas fa-credit-card' style='color:#6665dd;'></i></button>
+                            <button onclick="clearCart() " class='btn clear'>Xõa Giỏ hàng <i class='fas fa-trash' style='color:#bb342f;'></i></button>
                         </div>  
                     </div>
-                 </div>
+                </div>
+           
                 
                 
              </div>
@@ -105,8 +108,8 @@ showCart()
 
 
 function showtype() {
-    var typeSP = [];
-    var search = document.querySelector('#type').value;
+    let typeSP = [];
+    let search = document.querySelector('#type').value;
     console.log(search);
     if (search == "Iphone") {
         for (let i = 0; i < productlist.length; i++) {
@@ -136,36 +139,38 @@ function showtype() {
 
 
 function addproducts(id) {
-    var sp = productlist.find(function (item) {
-        return item.id === id
+    let sp = productlist.find(function (item) {
+        return item.id === id;
     })
-    console.log("🚀 ~ file: main.js ~ line 121 ~ sp ~ sp", sp)
+
     if (sp) {
 
-        var spPush = cart.findIndex(function (index) {
-            index.id === sp.id
+        let spPush = cart.data.findIndex(function (index) {
+            index.id === sp.id;
 
         })
         if (spPush == -1) {
-            cart.push(sp);
-            console.log("🚀 ~ file: main.js ~ line 136 ~ addproducts ~ spPush", cart)
+            cart.data.push(sp);
+            cart.quantity++;
+            
         }
-        else {
-            // cart.quantity++
-
+        else{
+            cart.data[spPush].quantity++;
         }
-
-
+        cart.total += Number(sp.price);
 
     }
     setlocalstorage();
     getlocalstorage();
 
+
 }
+
 function renderCartShop(cart) {
-    var content = "";
     console.log(cart)
-    cart.map(function (sp) {
+    var content = "";
+
+    cart.data.map(function (sp) {
         content += `
         <tr>
                 <div class="cart-item">
@@ -175,16 +180,16 @@ function renderCartShop(cart) {
                        
                         <button class="btn-quantity" >
                         
-                            <i class="fa-solid fa-chevron-left" onclick="nutGiam('${sp.id}')"></i>
+                            <i class="fa-solid fa-chevron-left" onclick=""></i>
                         </button> 
                             <span class="sl-phone"> ${sp.quantity}</span>
                         <button class="btn-quantity" >
-                            <i class="fa-solid fa-chevron-right" onclick="nutTang('${sp.id}')" ></i>
+                            <i class="fa-solid fa-chevron-right" onclick="" ></i>
                         </button>
                        
-                        <button class="btn-delete" onclick="removerCart()"><i class="fa-solid fa-trash"></i></button>
+                        <button class="btn-delete" onclick=""><i class="fa-solid fa-trash"></i></button>
                     
-                        <div class="cart-total" >$${sp.price * sp.quantity} </div>
+                        <div  class="cart-total"> $${sp.price * sp.quantity} </div>
                        
                     </div>
                 </div>
@@ -192,25 +197,32 @@ function renderCartShop(cart) {
         </tr>
         `
 
-        console.log(content)
+        
     });
     document.getElementById("spShop").innerHTML = content;
 
 
 }
-function removerCart() {
-    clearcart = [];
+function clearCart() {
+    cart = { quantity: 0, total: 0, data: [] };
     setlocalstorage();
     getlocalstorage();
 }
+function totalItem(total) {
+    
+    document.querySelector(".total").innerHTML = total.toLocaleString();
+}
+function congTotal(){
+    document.getElementById("quantity").innerHTML = cart.quantity;
+}
 
 
-function showshopCart(){
+function showshopCart() {
     document.getElementById("side-nav").style.right = "0";
 }
 
-function closeCart(){
-    document.getElementById("side-nav").style.right ="-100%";
+function closeCart() {
+    document.getElementById("side-nav").style.right = "-100%";
 }
 
 function setlocalstorage() {
@@ -221,7 +233,9 @@ function getlocalstorage() {
     if (localStorage.getItem("Products") != undefined) {
         cart = JSON.parse(localStorage.getItem("Products"));
     }
-    renderCartShop(cart)
+    renderCartShop(cart);
+    congTotal(cart);
+    totalItem(cart.total);
 
 }
 getlocalstorage();
