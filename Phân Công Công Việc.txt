@@ -1,8 +1,8 @@
 Phần 1:
 + Trường:từ câu 1 đến câu 8 và  10, 11 và phần nhỏ 12 về clearall cart
 
-
++ Duy Anh : không làm
 + Hưng: không làm (Add githud ko vào)
 
 Phần 2:
-+ Duy Anh: xây dựng giao diện admin và validation  
+Trường: xây dựng giao diện admin và validation  
