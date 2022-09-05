@@ -6,3 +6,9 @@ Phần 1:
 
 Phần 2:
 Trường: xây dựng giao diện admin và validation  
+
+phần 3 : deploy
+ Trường
+
+phần 4 : video youtube
+Trường
