@@ -5,11 +5,11 @@ var shopfifter = [];
 var cart = {quantity: 0, total: 0, data: []};
 
 let quantity = 0;
-function getProductList() {
+function getAddProductList() {
     sanpamService.getProductListIP()
         .then(function (result) {
             productlistshop = result.data;
-            showTable(productlistshop);
+            showaddTable(productlistshop);
         })
         .catch(function (error) {
 
@@ -17,8 +17,8 @@ function getProductList() {
         });
 
 }
-getProductList();
-function showTable(mangSP) {
+getAddProductList();
+function showaddTable(mangSP) {
     var content = "";
     mangSP.map(function (sp) {
         content += `
@@ -74,7 +74,7 @@ function showCart() {
                     <span class= 'totalicon'id="quantity" ></span>
                 </div>
                 
-                <select name="" id="type" onchange="showtype()" class="form-control" style="width: 15%;">
+                <select name="" id="type" onchange="showfiftertype()" class="form-control" style="width: 15%;">
                     <option value="all">Tất cả</option>
                     <option value="Iphone">Iphone</option>
                     <option value="Samsung">Samsung</option>
@@ -107,7 +107,7 @@ function showCart() {
 showCart()
 
 
-function showtype() {
+function showfiftertype() {
     let shopfifter = [];
     let search = document.querySelector('#type').value;
     
@@ -116,7 +116,7 @@ function showtype() {
             if (productlistshop[i].type == "Iphone") {
 
                 shopfifter.push(productlistshop[i])
-                showTable(shopfifter);
+                showaddTable(shopfifter);
                 
             }
         }
@@ -125,14 +125,14 @@ function showtype() {
         for (let i = 0; i < productlistshop.length; i++) {
             if (productlistshop[i].type == "Samsung") {
                 shopfifter.push(productlistshop[i])
-                showTable(shopfifter);
+                showaddTable(shopfifter);
            
                 
             }
         }
     }
     else {
-        showTable(productlistshop)
+        showaddTable(productlistshop)
 
     }
 }
