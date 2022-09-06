@@ -1,15 +1,15 @@
 
-var spService = new SanPhamService();
-var productlist = [];
-var typeSP = [];
+var sanpamService = new SanPhamService();
+var productlistshop = [];
+var shopfifter = [];
 var cart = {quantity: 0, total: 0, data: []};
 
 let quantity = 0;
 function getProductList() {
-    spService.getProductListIP()
+    sanpamService.getProductListIP()
         .then(function (result) {
-            productlist = result.data;
-            showTable(productlist);
+            productlistshop = result.data;
+            showTable(productlistshop);
         })
         .catch(function (error) {
 
@@ -108,38 +108,38 @@ showCart()
 
 
 function showtype() {
-    let typeSP = [];
+    let shopfifter = [];
     let search = document.querySelector('#type').value;
-    console.log(search);
+    
     if (search == "Iphone") {
-        for (let i = 0; i < productlist.length; i++) {
-            if (productlist[i].type == "Iphone") {
+        for (let i = 0; i < productlistshop.length; i++) {
+            if (productlistshop[i].type == "Iphone") {
 
-                typeSP.push(productlist[i])
-                showTable(typeSP);
-                console.log(1)
+                shopfifter.push(productlistshop[i])
+                showTable(shopfifter);
+                
             }
         }
     }
     else if (search == "Samsung") {
-        for (let i = 0; i < productlist.length; i++) {
-            if (productlist[i].type == "Samsung") {
-                typeSP.push(productlist[i])
-                showTable(typeSP);
-                console.log(typeSP)
-                console.log(2)
+        for (let i = 0; i < productlistshop.length; i++) {
+            if (productlistshop[i].type == "Samsung") {
+                shopfifter.push(productlistshop[i])
+                showTable(shopfifter);
+           
+                
             }
         }
     }
     else {
-        showTable(productlist)
+        showTable(productlistshop)
 
     }
 }
 
 
 function addproducts(id) {
-    let sp = productlist.find(function (item) {
+    let sp = productlistshop.find(function (item) {
         return item.id === id;
     })
 
@@ -166,8 +166,9 @@ function addproducts(id) {
 
 }
 
+
 function renderCartShop(cart) {
-    console.log(cart)
+  
     var content = "";
 
     cart.data.map(function (sp) {
@@ -187,7 +188,7 @@ function renderCartShop(cart) {
                             <i class="fa-solid fa-chevron-right" onclick="" ></i>
                         </button>
                        
-                        <button class="btn-delete" onclick=""><i class="fa-solid fa-trash"></i></button>
+                        <button class="btn-delete"><i class="fa-solid fa-trash"></i></button>
                     
                         <div  class="cart-total"> $${sp.price * sp.quantity} </div>
                        
@@ -212,6 +213,7 @@ function totalItem(total) {
     
     document.querySelector(".total").innerHTML = total.toLocaleString();
 }
+
 function congTotal(){
     document.getElementById("quantity").innerHTML = cart.quantity;
 }
